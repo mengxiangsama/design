@@ -15,9 +15,9 @@ public class Test  implements CommandLineRunner {
     private ChainHandler chainHandler;
         @Override
         public void run(String... args) throws Exception {
-            // 1 or 2 枚举
-            strategyFactory.run(1);
-            strategyFactory.run(2);
+            strategyFactory.run(TestEnum.S_1.getCode());
+            strategyFactory.run(TestEnum.S_2.getCode());
+            
             chainHandler.executionChain(Param.builder().i(1).build());
         }
 }

@@ -7,7 +7,7 @@ public class Strategy1 extends StrategyAbstract {
 
     @Override
     public Integer getType() {
-        return 1;
+        return TestEnum.S_1.getCode();
     }
 
     @Override

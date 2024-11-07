@@ -19,7 +19,7 @@ public class StrategyFactory {
             SERVICE_MAP.put(item.getType(), item);
         });
     }
-    private static final Map<Integer, StrategyService> SERVICE_MAP = new HashMap<>();
+    private static final Map<Integer, StrategyAbstract> SERVICE_MAP = new HashMap<>();
 
     public void run(Integer i){
         if(SERVICE_MAP.containsKey(i)){
