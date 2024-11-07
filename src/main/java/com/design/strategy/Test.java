@@ -16,7 +16,6 @@ public class Test implements CommandLineRunner {
     private StrategyFactory strategyFactory;
     @Resource
     private ChainHandler chainHandler;
-
     @Resource
     private OrderHandlerFactory orderHandlerFactory;
 
