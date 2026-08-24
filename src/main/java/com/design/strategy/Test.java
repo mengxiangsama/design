@@ -3,6 +3,8 @@ package com.design.strategy;
 import com.design.handler.OrderHandlerFactory;
 import com.design.handler.OrderStatusEnum;
 import com.design.handler.TyeEnum;
+import com.design.order.OrderEvent;
+import com.design.order.OrderStateMachineService;
 import com.design.responsibility.ChainHandler;
 import com.design.responsibility.Param;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +20,8 @@ public class Test implements CommandLineRunner {
     private ChainHandler chainHandler;
     @Resource
     private OrderHandlerFactory orderHandlerFactory;
+    @Resource
+    private OrderStateMachineService orderStateMachineService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -34,5 +38,23 @@ public class Test implements CommandLineRunner {
         orderHandlerFactory.handle(TyeEnum.S_2.getCode(), OrderStatusEnum.CANAL.getCode(), null);
         orderHandlerFactory.handle(TyeEnum.S_2.getCode(), OrderStatusEnum.CUSTOM.getCode(), null);
 
+        testOrderStateMachine();
+
+    }
+
+    private void testOrderStateMachine() {
+        Long orderId = 10001L;
+        System.out.println("state machine -> " + orderStateMachineService
+                .getState(orderId).getDescription());
+        System.out.println("state machine -> " + orderStateMachineService
+                .sendEventAndGetState(orderId, OrderEvent.PAY).getDescription());
+        System.out.println("state machine -> " + orderStateMachineService
+                .sendEventAndGetState(orderId, OrderEvent.START_PROCESSING).getDescription());
+        System.out.println("state machine -> " + orderStateMachineService
+                .sendEventAndGetState(orderId, OrderEvent.COMPLETE).getDescription());
+        System.out.println("state machine -> " + orderStateMachineService
+                .sendEventAndGetState(orderId, OrderEvent.APPLY_REFUND).getDescription());
+        System.out.println("state machine -> " + orderStateMachineService
+                .sendEventAndGetState(orderId, OrderEvent.REFUND_SUCCESS).getDescription());
     }
 }
