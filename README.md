@@ -18,7 +18,7 @@
 - Lombok
 - Maven
 
-依赖配置见 [pom.xml](/Users/w/IdeaProjects/design/design/pom.xml)。
+依赖配置见 [pom.xml](pom.xml)。
 
 ## 项目结构
 
@@ -207,6 +207,18 @@ orderStateMachineService.sendEventAndGetState(
 
 因此该类是演示入口，不代表正式业务入口。正式项目中建议将这些验证逻辑迁移到单元测试或集成测试中。
 
+## 自动化测试
+
+使用 JDK 8 和 Maven 执行：
+
+```bash
+mvn --batch-mode --no-transfer-progress verify
+```
+
+`src/test/java` 中的 JUnit 5 测试覆盖策略分发、责任链执行顺序和空链校验、订单类型与状态分发，以及订单状态机的全部合法转换、待支付状态下的非法事件、重复支付、订单隔离和空订单 ID。
+
+测试只加载需要的组件，不启动 Web 服务，也不会执行 `CommandLineRunner` 演示入口。GitHub Actions 在 push 和 pull request 时使用 JDK 8 运行同一命令。现有依赖版本较旧，请使用 JDK 8；升级 JDK 前应一并检查 Lombok 和 Spring 的兼容性。
+
 ## 启动项目
 
 确保本机已安装 Java 8 和 Maven，然后执行：
@@ -228,3 +240,7 @@ mvn spring-boot:run
 5. 统一的业务异常和错误码。
 6. 针对每条合法和非法状态流转的单元测试。
 7. 通过配置开关控制 Demo 启动测试，避免测试代码影响正式启动。
+
+## 许可证
+
+当前尚未声明生效的开源许可证。已准备 [MIT 许可证候选文本](docs/LICENSE-MIT.proposed.md)，供仓库所有者确认版权归属并决定是否采用；候选文本本身不构成授权。
